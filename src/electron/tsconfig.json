@@ -11,6 +11,7 @@
     "outDir": "../../dist-electron",
 
     //ignore errors from libraries
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["../../types"]
   }
 }

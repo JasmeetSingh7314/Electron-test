@@ -9,4 +9,3 @@ export function getPreloadPath() {
     "/dist-electron/preload.cjs"
   );
 }
-
