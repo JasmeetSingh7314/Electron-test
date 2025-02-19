@@ -22,10 +22,3 @@ A lightweight desktop application that mimics a task manager, displaying real-ti
 - **Styling**: CSS Modules
 
 ---
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/task-manager-lite.git
-   ```
