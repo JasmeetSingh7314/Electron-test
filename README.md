@@ -21,4 +21,3 @@ A lightweight desktop application that mimics a task manager, displaying real-ti
 - **Desktop Framework**: Electron
 - **Styling**: CSS Modules
 
----
