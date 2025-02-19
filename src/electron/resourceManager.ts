@@ -3,7 +3,7 @@ import fs from "fs";
 import os from "os";
 import { BrowserWindow } from "electron";
 import { ipcWebContentsSend } from "./util.js";
-const POLLING_INTERVAL = 5000;
+const POLLING_INTERVAL = 500;
 
 export function pollResources(mainWindow: BrowserWindow) {
   setInterval(async () => {

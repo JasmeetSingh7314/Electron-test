@@ -5,11 +5,10 @@ const electron = require("electron");
 //satisfies checks the type by typescript
 
 electron.contextBridge.exposeInMainWorld("electron", {
-  subscribeStatistics: (callback) => {
-    return ipcOn("statistics", (stats: any) => {
+  subscribeStatistics: (callback) =>
+    ipcOn("statistics", (stats) => {
       callback(stats);
-    });
-  },
+    }),
   getStaticData: () => ipcInvoke("staticData"),
 } satisfies Window["electron"]);
 
