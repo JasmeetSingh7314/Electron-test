@@ -9,7 +9,10 @@ function App() {
   // //@ts-ignore
   // window.electron.getStaticData();
   useEffect(() => {
-    window.electron.subscribeStatistics((stats) => console.log(stats));
+    const unsub = window.electron.subscribeStatistics((stats) =>
+      console.log(stats)
+    );
+    return unsub;
   }, []);
   return (
     <>
