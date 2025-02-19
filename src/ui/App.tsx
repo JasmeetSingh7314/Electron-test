@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import reactLogo from "../assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import { useStatistics } from "./useStatistics";
 import { Chart } from "./Chart";
 import "./App.css";
+import { useView } from "./useView";
 
 function App() {
   // //@ts-ignore
@@ -24,27 +25,33 @@ function App() {
     () => statistics.map((stat) => stat.storageUsage),
     [statistics]
   );
+
+  const activeView = useView();
+
+  const viewData = useMemo(() => {
+    switch (activeView) {
+      case "CPU":
+        return cpuUsages;
+      case "RAM":
+        return ramUsage;
+      case "STORAGE":
+        return storageUsage;
+    }
+  }, [activeView, ramUsage, cpuUsages, storageUsage]);
   // console.log(statistics);
   // console.log(cpuUsages);
   // console.log(cpuUsages);
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
+      <div style={{ width: 300 }}>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
       <div style={{ height: 120 }}>
         {/* chart goes here */}
-        <h2>CPU Usage:</h2>
-        <Chart data={cpuUsages} maxDataPoints={10} />
-        <h2>RAM Usage:</h2>
-        <Chart data={ramUsage} maxDataPoints={10} />
-        <h2>Storage Usage:</h2>
-        <Chart data={storageUsage} maxDataPoints={10} />
+        <h2>{`${activeView} Usage`}</h2>
+        <Chart data={viewData} currentView={activeView} maxDataPoints={10} />
       </div>
     </>
   );

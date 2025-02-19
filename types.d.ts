@@ -10,10 +10,13 @@ type StaticData = {
   totalMemoryGB: number;
 };
 
+type View = "CPU" | "RAM" | "STORAGE";
+
 //TypeSafe Adapters: which donot allow the types to escape .. also maintain type safety on both sides of bus
 type EventPayloadMapping = {
   statistics: Statistics;
   staticData: StaticData;
+  changeView: View;
 };
 
 type UnsubscribeFunction = () => void;
@@ -23,6 +26,9 @@ interface Window {
   electron: {
     subscribeStatistics: (
       callback: (statistics: Statistics) => void
+    ) => UnsubscribeFunction;
+    subscribeChangeView: (
+      callback: (view: View) => void
     ) => UnsubscribeFunction;
     getStaticData: () => Promise<StaticData>;
   };

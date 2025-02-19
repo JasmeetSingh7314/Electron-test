@@ -1,9 +1,12 @@
-import { app, BrowserWindow, ipcMain, session } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, session, Tray } from "electron";
 import path from "path";
 import { ipcMainHandle, isDev } from "./util.js";
 import { getStaticData, pollResources } from "./resourceManager.js";
-import { getPreloadPath } from "./pathResolver.js";
+import { getAssetPath, getPreloadPath } from "./pathResolver.js";
+import { createTray } from "./tray.js";
+import { menu } from "./menu.js";
 
+// Menu.setApplicationMenu(null);
 app.on("ready", () => {
   //Preferences limit the way we can
   const mainWindow = new BrowserWindow({
@@ -28,4 +31,31 @@ app.on("ready", () => {
   ipcMainHandle("staticData", () => {
     return getStaticData();
   });
+
+  createTray(mainWindow);
+
+  handleCloseEvent(mainWindow);
+  menu(mainWindow);
 });
+
+function handleCloseEvent(mainWindow: BrowserWindow) {
+  let willClose = false;
+
+  if (willClose) {
+    return;
+  }
+  mainWindow.on("close", (e) => {
+    e.preventDefault();
+    mainWindow.hide();
+    if (app.dock) {
+      app.dock.hide();
+    }
+  });
+  app.on("before-quit", () => {
+    willClose = true;
+  });
+
+  mainWindow.on("show", () => {
+    willClose = false;
+  });
+}
